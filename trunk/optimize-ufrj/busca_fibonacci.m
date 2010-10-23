@@ -1,6 +1,6 @@
 function [passo,cont_it_lin] = busca_fibonacci(d_descida,x,nit,max_it)
 
-% ------------ Fibonacci      A---------B-----C---------D
+% ------------ Fibonacci A---------B-----C---------D
 
 x0 = x;
 
