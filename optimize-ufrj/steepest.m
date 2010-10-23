@@ -60,8 +60,12 @@ while ~(cond_parada == 0)
     [passo,cont_it_lin] = buscas(bl,d_descida,x,crit_parada(5),crit_parada(4));
 
     % ------------------------- Fim ----------------------------------------
-    vet_df(cont_it) = norm(df);
-    vet_d_descida(cont_it) = norm(d_descida);
+    vet_x(:,cont_it) = x;
+    vet_f(:,cont_it) = f;
+    vet_df(:,cont_it) = df;
+    vet_d_descida(:,cont_it) = d_descida;
+    vet_df_norm(cont_it) = norm(df);
+    vet_d_descida_norm(cont_it) = norm(d_descida);
     vet_passo(cont_it) = passo;
     vet_cont_it_lin(cont_it) = cont_it_lin;
     
@@ -75,7 +79,16 @@ end
 
 % ------------------- Gerando a tabela de saida no arquivo resultado.rtf
 
-ok = tabela(x,vet_d_descida,vet_df,vet_passo,vet_cont_it_lin, cont_it);
-    
+ok = tabela(x,vet_d_descida_norm,vet_df_norm,vet_passo,vet_cont_it_lin, cont_it);
+
+figure;
+plot3(vet_x(1,:),vet_x(2,:),vet_f);
+hold on;
+scale = [1.2*-x0(1),1.2*x0(1),1.2*-x0(2),1.2*x0(2),min(vet_f),max(vet_f)];
+ezsurf(evalin('base','fun'),scale);
+
+ 
+
+
 
 

@@ -8,3 +8,5 @@ for i = 1:nvar
 end
 
 evalin('base','grad_fun = jacobian(fun,xsym);');
+
+evalin('base','hess_fun = jacobian(grad_fun,xsym);');

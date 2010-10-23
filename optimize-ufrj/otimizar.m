@@ -15,7 +15,7 @@ x0 = evalin('base','x0');
 nvar = evalin('base','nvar');
 
 preparafuns(nvar);
-
+hh = avaliagrad(x0);
 
 %---------------------- Métodos de Otimização -------------------------
 switch mo
