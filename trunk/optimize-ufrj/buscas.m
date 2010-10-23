@@ -5,7 +5,8 @@ switch bl
 
     %------------- Fibonacci
     case 1
-        %[passo,cont_it_lin] = fibonacci(d_descida,x,eps,max_it);
+        nit = eps; % fibonacci é o único que precisa do número de iterações.
+        [passo,cont_it_lin] = busca_fibonacci(d_descida,x,nit,max_it);
 
     %------------- Razao Áurea
     case 2
