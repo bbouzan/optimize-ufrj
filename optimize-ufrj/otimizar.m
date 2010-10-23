@@ -1,5 +1,7 @@
 function otimizar
 
+%clear all;
+%close all;
 clc;
 format long;
 
@@ -15,7 +17,6 @@ x0 = evalin('base','x0');
 nvar = evalin('base','nvar');
 
 preparafuns(nvar);
-hh = avaliagrad(x0);
 
 %---------------------- Métodos de Otimização -------------------------
 switch mo
@@ -40,5 +41,3 @@ switch mo
     case 4     
         %x = quase_newton(x0,bl,crit_parada,mo_aux);
 end
-
-evalin('base','clear all');

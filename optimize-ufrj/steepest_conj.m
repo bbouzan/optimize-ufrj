@@ -1,7 +1,6 @@
 function [x] = steepest_conj(x0,bl,crit_parada,aux)
 
 x = x0;
-fold = inf;
 cond_parada = 1;
 cont_it = 1;
 cont_it_lin = 0;
@@ -28,12 +27,12 @@ while ~(cond_parada == 0)
         break;
     end
     
-    if ( crit_parada(1) > 0 ) && ( abs(f - fold) < crit_parada(1) )
+    if ( cont_it > 1 ) && ( crit_parada(1) > 0 ) && ( abs(f - vet_f(cont_it-1)) < crit_parada(1) )
         cond_parada = 0;        
         break;
     end
     
-    if ( crit_parada(2) > 0 ) && ( (abs(f - fold)/abs(fold)) < crit_parada(2) )
+    if ( cont_it > 1 ) &&  ( crit_parada(2) > 0 ) && ( (abs(f - vet_f(cont_it-1))/abs(vet_f(cont_it-1))) < crit_parada(2) )
         cond_parada = 0;        
         break;
     end
@@ -58,12 +57,12 @@ while ~(cond_parada == 0)
     else
         if aux == 0 
             % Polak-Rebiere
-            beta = norm(df) - df' * dfold / norm(dfold); 
-            d_descida = -df + beta * dfold;      
+            beta = norm(df) - df' * vet_df(:,cont_it-1) / norm(vet_df(:,cont_it-1)); 
+            d_descida = -df + beta * vet_df(:,cont_it-1);      
         else
             % Fletcher-Reeves
-            beta = norm(df) / norm(dfold); 
-            d_descida = -df + beta * dfold;
+            beta = norm(df) / norm(vet_df(:,cont_it-1)); 
+            d_descida = -df + beta * vet_df(:,cont_it-1);
         end
     end
 
@@ -72,13 +71,14 @@ while ~(cond_parada == 0)
     [passo,cont_it_lin] = buscas(bl,d_descida,x,crit_parada(5),crit_parada(4));
 
     % ------------------------- Fim ----------------------------------------
-    vet_df(cont_it) = norm(df);
-    vet_d_descida(cont_it) = norm(d_descida);
+    vet_x(:,cont_it) = x;
+    vet_f(cont_it) = f;
+    vet_df(:,cont_it) = df;
+    vet_d_descida(:,cont_it) = d_descida;
+    vet_df_norm(cont_it) = norm(df);
+    vet_d_descida_norm(cont_it) = norm(d_descida);
     vet_passo(cont_it) = passo;
     vet_cont_it_lin(cont_it) = cont_it_lin;
-    
-    fold = f;
-    dfold = df;
 
     x = x + passo*d_descida;
     
@@ -86,6 +86,11 @@ while ~(cond_parada == 0)
 end
 
 
+% ------------------- Gerando o gráfico
+
+ok = grafico(x0,vet_x, vet_f);
+
+
 % ------------------- Gerando a tabela de saida no arquivo resultado.rtf
 
-ok = tabela(x,vet_d_descida,vet_df,vet_passo,vet_cont_it_lin, cont_it);
+ok = tabela(x,vet_d_descida_norm,vet_df_norm,vet_passo,vet_cont_it_lin, cont_it);
