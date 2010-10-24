@@ -39,8 +39,9 @@ while ~(cond_parada == 0)
 
     %----------------------Calcula a Direcao de Descida ---------------------
 
-    % -------------------- Metodo do Gradiente Conjugado
+    % -------------------- Metodo de Newton
     df = avaliagrad(x);
+    hessf = avaliahess(x);
     
     if ( any( isnan(df) == 1 ))
         cond_parada = 0;        
@@ -52,19 +53,7 @@ while ~(cond_parada == 0)
         break;
     end
     
-    if cont_it == 1
-        d_descida = -df;
-    else
-        if aux == 0 
-            % Polak-Rebiere
-            beta = norm(df) - df' * vet_df(:,cont_it-1) / norm(vet_df(:,cont_it-1)); 
-            d_descida = -df + beta * vet_df(:,cont_it-1);      
-        else
-            % Fletcher-Reeves
-            beta = norm(df) / norm(vet_df(:,cont_it-1)); 
-            d_descida = -df + beta * vet_df(:,cont_it-1);
-        end
-    end
+    d_descida = -inv(hessf)*df;
 
     %----------------------------- Busca Linear ---------------------------
 
