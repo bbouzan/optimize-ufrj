@@ -14,7 +14,7 @@ switch bl
 
     %------------- Interpolação Quadrática
     case 3
-        %[passo,cont_it_lin] = busca_interpolacao(d_descida,x,eps,max_it);
+        [passo,cont_it_lin] = busca_interpolacao(d_descida,x,eps,max_it);
 
     %------------- Interpolação (Brent)
     case 4
