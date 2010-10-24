@@ -1,4 +1,4 @@
-function [x] = steepest_conj(x0,bl,crit_parada,aux)
+function [x] = newton(x0,bl,crit_parada,aux)
 
 x = x0;
 cond_parada = 1;
