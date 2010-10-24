@@ -39,7 +39,7 @@ while ~(cond_parada == 0)
 
     %----------------------Calcula a Direcao de Descida ---------------------
 
-    % -------------------- Metodo de Newton
+    % -------------------- Metodo de Newton Modificado
     df = avaliagrad(x);
     hessf = avaliahess(x);
     
@@ -53,8 +53,16 @@ while ~(cond_parada == 0)
         break;
     end
     
-    d_descida = -inv(hessf)*df;
-
+    eigs = eig(hessf);
+    if any(eigs < 0.01)
+        gama = 2*abs(min(eigs));
+    else
+        gama = 0;
+    end
+    I = eye(size(hessf));
+    F = hessf + gama*I;
+    d_descida = -inv(F)*df;
+    
     %----------------------------- Busca Linear ---------------------------
 
     [passo,cont_it_lin] = buscas(bl,d_descida,x,crit_parada(5),crit_parada(4));
