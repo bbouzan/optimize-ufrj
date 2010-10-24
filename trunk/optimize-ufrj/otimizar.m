@@ -31,7 +31,7 @@ switch mo
         
     %------------- Newton    
     case 2     
-        %x = newton(x0,bl,crit_parada,mo_aux);
+        x = newton(x0,bl,crit_parada,mo_aux);
         
     %------------- Newton Modificado    
     case 3     
