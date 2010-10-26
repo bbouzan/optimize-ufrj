@@ -39,5 +39,5 @@ switch mo
         
     %------------- Quase-Newton   
     case 4     
-        %x = quase_newton(x0,bl,crit_parada,mo_aux);
+        x = quase_newton(x0,bl,crit_parada,mo_aux,nvar);
 end
