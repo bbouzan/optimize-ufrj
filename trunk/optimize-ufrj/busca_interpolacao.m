@@ -20,7 +20,9 @@ xb = x0 + z(2) * d_descida;
 
 zmin = 0.5*((((z(2)^2 - z(3)^2)*f(1)) + ((z(3)^2 - z(1)^2)*f(2)) + ((z(1)^2 - z(2)^2)*f(3)))/(((z(2) - z(3))*f(1)) + ((z(3) - z(1))*f(2)) + ((z(1) - z(2))*f(3))));
 
-[fmin] = avaliafun(x0 + zmin * d_descida);
+ymin = x0 + zmin * d_descida;
+
+[fmin] = avaliafun(ymin);
 
 erro = [abs(z(1)-zmin); abs(z(2)-zmin); abs(z(3)-zmin)];
 
@@ -61,10 +63,14 @@ while any(intervalo > eps)
     
     zmin = 0.5*((((z(2)^2 - z(3)^2)*f(1)) + ((z(3)^2 - z(1)^2)*f(2)) + ((z(1)^2 - z(2)^2)*f(3)))/(((z(2) - z(3))*f(1)) + ((z(3) - z(1))*f(2)) + ((z(1) - z(2))*f(3))));
    
-    [fmin] = avaliafun(x0 + zmin * d_descida);
+    ymin = x0 + zmin * d_descida;
+    
+    [fmin] = avaliafun(ymin);
    
     erro = [abs(z(1)-zmin); abs(z(2)-zmin); abs(z(3)-zmin)];
+    
     [intervalo, indice] = min(erro, [], 1);
 
 end
-passo = z(indice); 
+
+passo = z(indice);
