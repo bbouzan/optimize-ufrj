@@ -39,13 +39,14 @@ while ((abs(xmin - x(1)) > eps) &&  (abs(xmin - x(2)) > eps) && (abs(xmin - x(3)
     [f(1)]=feval(fun,x(1));
     [f(3)]=feval(fun,x(3));
     [f(2)]=feval(fun,x(2));
-xmin = 0.5*((((x(2)^2 - x(3)^2)*f(1)) + ((x(3)^2 - x(1)^2)*f(2)) + ((x(1)^2 - x(2)^2)*f(3)))/(((x(2) - x(3))*f(1)) + ((x(3) - x(1))*f(2)) + ((x(1) - x(2))*f(3))));
+    xmin = 0.5*((((x(2)^2 - x(3)^2)*f(1)) + ((x(3)^2 - x(1)^2)*f(2)) + ((x(1)^2 - x(2)^2)*f(3)))/(((x(2) - x(3))*f(1)) + ((x(3) - x(1))*f(2)) + ((x(1) - x(2))*f(3))));
     [fmin]=feval(fun,xmin);
    
 end
 
 X = [ abs(xmin - x(1)); abs(xmin - x(2)); abs(xmin - x(3))]; 
-xminimo = min(X, [], 1) + xmin;
+[xminimo, indice] = min(X, [], 1);
+xminimo = xmin - (sign(xmin - x(indice))*xminimo);
 
 I = xminimo;
 
