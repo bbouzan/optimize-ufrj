@@ -1,5 +1,4 @@
-function [f]=fun(x)
+function f = fun(xeval)
 
-%f = (x-4)^4 + 4*(x-4)^2 + 1;
-%f = x^8 + x^7 + x^6 + x^5;
-f = - exp(-(x + 1)^2);
+assignin('base','xeval',xeval);
+f = evalin('base','subs(fun,xeval);');
