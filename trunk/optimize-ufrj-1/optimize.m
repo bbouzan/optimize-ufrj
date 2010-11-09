@@ -1,6 +1,6 @@
 function optimize
 
-%clear all;
+clear all;
 clc;
 format long;
 
