@@ -1,6 +1,6 @@
 function otimizar
 
-%clear all;
+clear all;
 %close all;
 clc;
 format long;

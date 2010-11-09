@@ -6,10 +6,12 @@ cont_it = 1;
 cont_it_lin = 0;
 df = avaliagrad(x);
 hessf = eye (nvar); 
+texto_parada = '';
 
 while ~(cond_parada == 0)
     
     if ( crit_parada(4) > 0 ) && ( cont_it > crit_parada(4) )
+        texto_parada = strcat('Número máximo de iterações atingido (',num2str(crit_parada(4)),')');
         cond_parada = 0;        
         break;
     end    
@@ -17,6 +19,7 @@ while ~(cond_parada == 0)
     x = x(:);   
     
     if ( any( isnan(x) == 1 ))
+        texto_parada = 'Método alcançou valores fora da da precisão da máquina';
         cond_parada = 0;        
         break;
     end 
@@ -25,16 +28,19 @@ while ~(cond_parada == 0)
     f = avaliafun(x);
     
     if ( any( isnan(f) == 1 ))
+        texto_parada = 'Função alcançou valores fora da da precisão da máquina';
         cond_parada = 0;        
         break;
     end
     
     if ( cont_it > 1 ) && ( crit_parada(1) > 0 ) && ( abs(f - vet_f(cont_it-1)) < crit_parada(1) )
+        texto_parada = strcat('Diferença Absoluta < ',num2str(crit_parada(1)));
         cond_parada = 0;        
         break;
     end
     
     if ( cont_it > 1 ) &&  ( crit_parada(2) > 0 ) && ( (abs(f - vet_f(cont_it-1))/abs(vet_f(cont_it-1))) < crit_parada(2) )
+        texto_parada = strcat('Diferença Relativa < ',num2str(crit_parada(2)));
         cond_parada = 0;        
         break;
     end
@@ -46,11 +52,13 @@ while ~(cond_parada == 0)
     %hessf = avaliahess(x);
     
     if ( any( isnan(df) == 1 ))
+        texto_parada = 'Gradiente alcançou valores fora da da precisão da máquina';
         cond_parada = 0;        
         break;
     end
 
     if ( crit_parada(3) > 0 ) && ( norm(df) < crit_parada(3) );
+        texto_parada = strcat('Módulo do Gradiente < ',num2str(crit_parada(3)));
         cond_parada = 0;        
         break;
     end
@@ -92,6 +100,7 @@ while ~(cond_parada == 0)
     cont_it = cont_it + 1;
 end
 
+assignin('base','texto_parada',texto_parada);
 
 % ------------------- Gerando o gráfico
 
