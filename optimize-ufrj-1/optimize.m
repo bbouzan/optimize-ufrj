@@ -82,12 +82,11 @@ if method == 5
     
     fprintf(1,'\n\n Método escolhido: Enquadramento \n');    
     
-    %I1(1) = input(' > Digite o valor inferior do intervalo inicial: ');
-    %I1(2) = input(' > Digite o valor superior do intervalo inicial: ');
-    %eps = input(' > Digite a tolerância para o critério de parada: ');
-    
-    %[I,cont_it] = enquadramento(eval_fun,I1,eps);
-    
-    %fprintf(1,strcat('\n Valor Mínimo= ',num2str(I)));
-    %fprintf(1,strcat('\n Número de Iterações=',num2str(cont_it),'\n\n'));    
+    po = input(' > Digite o valor do ponto inicial: ');
+    passo = input(' > Digite o valor do passo fixo considerado: ');
+      
+    [I] = enquadramento(eval_fun,po,passo);
+        
+    fprintf(1,strcat('\n Intervalo = [',num2str(I(1)),';',num2str(I(2)),']', '\n\n'));
+     
 end
